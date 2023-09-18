@@ -14,7 +14,7 @@ pub struct GreetingAccount {
     /// number of greetings
     pub random_number: u32,
 }
-
+use rand::Rng;
 // Declare and export the program's entrypoint
 entrypoint!(process_instruction);
 

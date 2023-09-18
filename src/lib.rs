@@ -12,7 +12,7 @@ use solana_program::{
 #[derive(BorshSerialize, BorshDeserialize, Debug)]
 pub struct GreetingAccount {
     /// number of greetings
-    pub counter: u32,
+    pub random_number: u32,
 }
 
 // Declare and export the program's entrypoint
@@ -37,13 +37,19 @@ pub fn process_instruction(
         msg!("Greeted account does not have the correct program id");
         return Err(ProgramError::IncorrectProgramId);
     }
+// Generar un número aleatorio
+    let mut rng = rand::thread_rng();
+    let random_number = rng.gen_range(1..=100); // Número aleatorio entre 1 y 100
 
     // Increment and store the number of times the account has been greeted
-    let mut greeting_account = GreetingAccount::try_from_slice(&account.data.borrow())?;
-    greeting_account.counter += 1;
-    greeting_account.serialize(&mut &mut account.data.borrow_mut()[..])?;
+  let mut greeting_account = GreetingAccount::try_from_slice(&account.data.borrow())?;
 
-    msg!("Greeted {} time(s)!", greeting_account.counter);
+  // Asignar el valor aleatorio a greeting_account.random_value
+  greeting_account.random_value = random_number;
+
+    greeting_account.serialize(&mut &mut account.data.borrow_mut()[..])?;
+msg!("Número aleatorio generado: {}", greeting_account.counter);
+   // msg!("Greeted {} time(s)!", greeting_account.counter);
 
     Ok(())
 }

@@ -38,17 +38,21 @@ pub fn process_instruction(
         return Err(ProgramError::IncorrectProgramId);
     }
 // Generar un número aleatorio
-    let mut rng = rand::thread_rng();
-    let random_number = rng.gen_range(1..=100); // Número aleatorio entre 1 y 100
+let mut rng = rand::thread_rng();
+let random_number = rng.gen_range(1..=100); // Número aleatorio entre 1 y 100
 
-    // Increment and store the number of times the account has been greeted
-  let mut greeting_account = GreetingAccount::try_from_slice(&account.data.borrow())?;
+// Increment and store the number of times the account has been greeted
+let mut greeting_account = GreetingAccount::try_from_slice(&account.data.borrow())?;
 
-  // Asignar el valor aleatorio a greeting_account.random_value
-  greeting_account.random_value = random_number;
+// Asignar el valor aleatorio a greeting_account.random_number
+greeting_account.random_number = random_number;
 
-    greeting_account.serialize(&mut &mut account.data.borrow_mut()[..])?;
-msg!("Número aleatorio generado: {}", greeting_account.counter);
+greeting_account.serialize(&mut &mut account.data.borrow_mut()[..])?;
+msg!("Número aleatorio generado: {}", greeting_account.random_number);
+
+
+/*    greeting_account.serialize(&mut &mut account.data.borrow_mut()[..])?;
+msg!("Número aleatorio generado: {}", greeting_account.counter);*/
    // msg!("Greeted {} time(s)!", greeting_account.counter);
 
     Ok(())
